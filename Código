@@ -1,6 +1,11 @@
+import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import pyplot as plt
-import cv2 #Opencv
+import cv2 
+import math
+
+
+
 
 img1 = cv2.imread('girasol1.png')
 img2 = cv2.imread('girasol2.png')
@@ -10,10 +15,6 @@ c_imag1 = cv2.resize(img1, dsize = (300, 350), interpolation=cv2.INTER_CUBIC)
 c_imag2 = cv2.resize(img2, dsize = (300, 350), interpolation=cv2.INTER_CUBIC)
 
 
-#Mostrar Imagen combinada
-plt.imshow(combinado1)
-plt.axis('off')
-plt.show()
 
 #Imprimo matrices de la imagen 1
 print(c_imag1)
@@ -23,116 +24,137 @@ print("------------1------------")
 print(c_imag2)
 print("------------2------------")
 
+cv2.imshow('Girasol1',c_imag1)
+cv2.imshow('Girasol2',c_imag2)
 
-#Comenzando con la suma de imagenes
-#---------------------------------------------------------------#
-#Metodologia 1
-sum_imag = cv2.add(c_imag1,c_imag2)
-print(sum_imag)
-cv2.imshow('Suma',sum_imag)
+H = cv2.waitKey (0) & 0xFF
+if H == ord('h'):
 
-cv2.waitKey(0)
+    #Comenzando con la suma de imagenes
+    #---------------------------------------------------------------#
+    #Metodologia 1
+    sum_imag = cv2.add(c_imag1,c_imag2)
+    print(sum_imag)
+    cv2.imshow('Suma',sum_imag)
 
+    cv2.waitKey(0)
 
-#Metodologia2
-sum2_imag = c_imag1 + c_imag2
-print(sum2_imag)
-cv2.imshow('Suma2',sum2_imag)
-cv2.waitKey(0)
+    #Metodologia2
+    sum2_imag = c_imag1 + c_imag2
+    print(sum2_imag)
+    cv2.imshow('Suma2',sum2_imag)
+    cv2.waitKey(0)
 
-#Metodologia3
-sum3_imag = cv2.addWeighted(c_imag1, 0.5, c_imag2, 0.5, 0)
-print(sum3_imag)
-cv2.imshow('Suma3',sum3_imag)
-cv2.waitKey(0)
+    #Metodologia3
+    sum3_imag = cv2.addWeighted(c_imag1, 0.5, c_imag2, 0.5, 0)
+    print(sum3_imag)
+    cv2.imshow('Suma3',sum3_imag)
+    cv2.waitKey(0)
 
-combinado2 = np.concatenate((sum_imag, sum2_imag), axis=1)  #Concatenar
-
-#Mostrar Imagen combinada
-plt.imshow(combinado2)
-plt.axis('off')
-plt.show()
-
-
-#La resta de las imagenes
-#---------------------------------------------------------------#
-res_imag = cv2.subtract(c_imag1,c_imag2)
-print(res_imag)
-cv2.imshow('Resta',res_imag)
+    combinado1 = np.concatenate((sum_imag, sum2_imag), axis=1)  #Concatenar
+    #Mostrar Imagen combinada
+    plt.imshow(combinado1)
+    plt.axis('off')
+    plt.show()
 
 
-cv2.waitKey(0)
+
+    #La resta de las imagenes
+    #---------------------------------------------------------------#
+    res_imag = cv2.subtract(c_imag1,c_imag2)
+    print(res_imag)
+    cv2.imshow('Resta',res_imag)
+    cv2.waitKey()
+
+    #Sustraccion
+    Sustraccion = cv2.subtract(c_imag1,c_imag2)
+    cv2.imshow('Sustraccion',Sustraccion)
+    cv2.waitKey()
 
 
-#La división de la imagen
-#---------------------------------------------------------------#
-div_imag = cv2.divide(c_imag1, c_imag2)
-print(div_imag)
-cv2.imshow('División',div_imag)
+    #Absdiff
+    Absdiff = cv2.absdiff(c_imag1,c_imag2)
+    cv2.imshow('Absdiff',Absdiff)
+    cv2.waitKey()
+
+    combinado2 = np.concatenate((res_imag, Sustraccion), axis=1)  #Concatenar
+    #Mostrar Imagen combinada
+    plt.imshow(combinado2)
+    plt.axis('off')
+    plt.show()
 
 
-cv2.waitKey(0)
+
+    #La división de la imagen
+    #---------------------------------------------------------------#
+    div_imag = cv2.divide(c_imag1, c_imag2)
+    print(div_imag)
+    cv2.imshow('División',div_imag)
 
 
-#La multiplicación de imagenes
-#---------------------------------------------------------------#
-mul_imag = cv2.multiply(c_imag1, c_imag2)
-print(mul_imag)
-cv2.imshow('Multiplicación',mul_imag)
+    cv2.waitKey(0)
 
 
-cv2.waitKey(0)
-
-#Logaritmo natural
-#---------------------------------------------------------------#
-c = 255 / np.log(1 + np.max(img1)) 
-log_image = c * (np.log(img1 + 1)) 
-log_image = np.array(log_image, dtype = np.uint8) 
-cv2.imshow('Logaritmo',log_image) 
-cv2.waitKey(0)
-
-#Raiz cuadrada
-Raiz = (img1**(0.5))
-cv2.imshow('Raiz',Raiz)
-cv2.waitKey()
+    #La multiplicación de imagenes
+    #---------------------------------------------------------------#
+    mul_imag = cv2.multiply(c_imag1, c_imag2)
+    print(mul_imag)
+    cv2.imshow('Multiplicación',mul_imag)
 
 
-###################### DERIVADA ##############################
+    cv2.waitKey(0)
 
-#Derivada
+    #Logaritmo natural
+    #---------------------------------------------------------------#
+    c = 255 / np.log(1 + np.max(img1)) 
+    log_image = c * (np.log(img1 + 1)) 
+    log_image = np.array(log_image, dtype = np.uint8) 
+    cv2.imshow('Logaritmo',log_image) 
+    cv2.waitKey(0)
 
-Derivada = cv2.Laplacian(img1,cv2.CV_32F)
-cv2.imshow('Derivada',Derivada)
-cv2.waitKey()
-
-    
-
-###################### POTENCIA ##############################
-
-#Potencia
-Potencia = np.zeros(img1.shape, img1.dtype)
-g = 0.5
-Potencia = c * np.power(img1,g)
-maxi1 = np.amax(Potencia)
-Potencia = np.uint8(Potencia/maxi1 * 255)
-    
-cv2.imshow('Potencia',Potencia)
-cv2.waitKey()
+    #Raiz cuadrada
+    Raiz = (img1**(0.5))
+    cv2.imshow('Raiz',Raiz)
+    cv2.waitKey()
 
 
-#Pow
-Pow = cv2.pow(img1,2)
-cv2.imshow('Pow',Pow)
-cv2.waitKey()
-cv2.destroyAllWindows()
+    ###################### DERIVADA ##############################
 
-#Potencia
-Pote=(img1^2)
-cv2.imshow('Pote',Pote)
-cv2.waitKey()
-cv2.destroyAllWindows()
-    
+    #Derivada
+
+    Derivada = cv2.Laplacian(img1,cv2.CV_32F)
+    cv2.imshow('Derivada',Derivada)
+    cv2.waitKey()
+
+        
+
+    ###################### POTENCIA ##############################
+
+    #Potencia
+    Potencia = np.zeros(img1.shape, img1.dtype)
+    g = 0.5
+    Potencia = c * np.power(img1,g)
+    maxi1 = np.amax(Potencia)
+    Potencia = np.uint8(Potencia/maxi1 * 255)
+        
+    cv2.imshow('Potencia',Potencia)
+    cv2.waitKey()
 
 
-cv2.waitKey(0) #Retardo
-cv2.destroyAllWindows()
+    #Pow
+    Pow = cv2.pow(img1,2)
+    cv2.imshow('Pow',Pow)
+    cv2.waitKey()
+    cv2.destroyAllWindows()
+
+    #Potencia
+    Pote=(img1^2)
+    cv2.imshow('Pote',Pote)
+    cv2.waitKey()
+    cv2.destroyAllWindows()
+        
+
+
+    cv2.waitKey(0) #Retardo
+    cv2.destroyAllWindows()
+
