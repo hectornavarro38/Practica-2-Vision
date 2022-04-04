@@ -37,22 +37,17 @@ if H == ord('h'):
     cv2.imshow('Suma',sum_imag)
     cv2.waitKey(0)
 
-    #Metodologia2
-    sum2_imag = c_imag1 + c_imag2
-    cv2.imshow('Suma2',sum2_imag)
-    cv2.waitKey(0)
-
-    #Metodologia3
-    sum3_imag = cv2.addWeighted(c_imag1, 0.5, c_imag2, 0.5, 0)
-    cv2.imshow('Suma3',sum3_imag)
-    cv2.waitKey(0)
-
     combinado1 = np.concatenate((c_imag1,sum_imag,c_imag2), axis=1)  #Concatenar
     combinado1 = cv2.cvtColor(combinado1, cv2.COLOR_BGR2RGB)
     #Mostrar Imagen combinada
     plt.imshow(combinado1)
     plt.axis('off')
     plt.show()
+
+    #Metodologia2
+    sum2_imag = c_imag1 + c_imag2
+    cv2.imshow('Suma2',sum2_imag)
+    cv2.waitKey(0)
 
     combinado12 = np.concatenate((c_imag1,sum2_imag,c_imag2), axis=1)  #Concatenar
     combinado12 = cv2.cvtColor(combinado12,cv2.COLOR_BGR2RGB)
@@ -61,6 +56,12 @@ if H == ord('h'):
     plt.axis('off')
     plt.show()
 
+    #Metodologia3
+    sum3_imag = cv2.addWeighted(c_imag1, 0.5, c_imag2, 0.5, 0)
+    cv2.imshow('Suma3',sum3_imag)
+    cv2.waitKey(0)
+
+
     combinado13 = np.concatenate((c_imag1,sum3_imag,c_imag2), axis=1)  #Concatenar
     combinado13 = cv2.cvtColor(combinado13, cv2.COLOR_BGR2RGB)
     #Mostrar Imagen combinada
@@ -68,21 +69,12 @@ if H == ord('h'):
     plt.axis('off')
     plt.show()
 
+    cv2.destroyAllWindows()
+
     #La resta de las imagenes
     #---------------------------------------------------------------#
     res_imag = cv2.subtract(c_imag1,c_imag2)
     cv2.imshow('Resta',res_imag)
-    cv2.waitKey()
-
-    #Sustraccion
-    Sustraccion = cv2.subtract(c_imag1,c_imag2)
-    cv2.imshow('Sustraccion',Sustraccion)
-    cv2.waitKey()
-
-
-    #Absdiff
-    Absdiff = cv2.absdiff(c_imag1,c_imag2)
-    cv2.imshow('Absdiff',Absdiff)
     cv2.waitKey()
 
     combinado2 = np.concatenate((c_imag1,res_imag,c_imag2), axis=1 ) #Concatenar
@@ -92,12 +84,22 @@ if H == ord('h'):
     plt.axis('off')
     plt.show()
 
+    #Sustraccion
+    Sustraccion = cv2.subtract(c_imag1,c_imag2)
+    cv2.imshow('Sustraccion',Sustraccion)
+    cv2.waitKey()
+
     combinado22 = np.concatenate((c_imag1,Sustraccion,c_imag2), axis=1 ) #Concatenar
     combinado22 = cv2.cvtColor(combinado22, cv2.COLOR_BGR2RGB)
     #Mostrar Imagen combinada
     plt.imshow(combinado22)
     plt.axis('off')
     plt.show()
+
+    #Absdiff
+    Absdiff = cv2.absdiff(c_imag1,c_imag2)
+    cv2.imshow('Absdiff',Absdiff)
+    cv2.waitKey()
 
     combinado23 = np.concatenate((c_imag1,Absdiff,c_imag2), axis=1 ) #Concatenar
     combinado23 = cv2.cvtColor(combinado23, cv2.COLOR_BGR2RGB)
@@ -106,26 +108,43 @@ if H == ord('h'):
     plt.axis('off')
     plt.show()
 
+    cv2.destroyAllWindows()
 
 
     #La división de la imagen
     #---------------------------------------------------------------#
     div_imag = cv2.divide(c_imag1, c_imag2)
-    print(div_imag)
     cv2.imshow('División',div_imag)
-
-
     cv2.waitKey(0)
+
+    divi_imag = c_imag1 / c_imag2
+    cv2.imshow('División_1',divi_imag)
+    cv2.waitKey(0)
+
+
+    combinado3 = np.concatenate((c_imag1,div_imag,c_imag2), axis=1 ) #Concatenar
+    combinado3 = cv2.cvtColor(combinado3, cv2.COLOR_BGR2RGB)
+    #Mostrar Imagen combinada
+    plt.imshow(combinado3)
+    plt.axis('off')
+    plt.show()
+
+    cv2.destroyAllWindows()
 
 
     #La multiplicación de imagenes
     #---------------------------------------------------------------#
     mul_imag = cv2.multiply(c_imag1, c_imag2)
-    print(mul_imag)
     cv2.imshow('Multiplicación',mul_imag)
-
-
     cv2.waitKey(0)
+    
+    multi_imag = c_imag1 * c_imag2
+    cv2.imshow('Multiplicación_1',multi_imag)
+    cv2.waitKey(0)
+
+    cv2.destroyAllWindows()
+
+   
 
     #Logaritmo natural
     #---------------------------------------------------------------#
@@ -135,10 +154,14 @@ if H == ord('h'):
     cv2.imshow('Logaritmo',log_image) 
     cv2.waitKey(0)
 
+    cv2.destroyAllWindows()
+
     #Raiz cuadrada
     Raiz = (img1**(0.5))
     cv2.imshow('Raiz',Raiz)
     cv2.waitKey()
+
+    cv2.destroyAllWindows()
 
 
     ###################### DERIVADA ##############################
@@ -148,6 +171,8 @@ if H == ord('h'):
     Derivada = cv2.Laplacian(img1,cv2.CV_32F)
     cv2.imshow('Derivada',Derivada)
     cv2.waitKey()
+
+    cv2.destroyAllWindows()
 
         
 
@@ -165,7 +190,7 @@ if H == ord('h'):
 
 
     #Pow
-    Pow = cv2.pow(c_imag1,2)
+    Pow = cv2.pow(c_imag1,2)h
     cv2.imshow('Pow',Pow)
     cv2.waitKey()
     cv2.destroyAllWindows()
@@ -198,10 +223,7 @@ if H == ord('h'):
     plt.imshow(combinado82)
     plt.axis('off')
     plt.show()
-
-
     
 
     cv2.waitKey(0) #Retardo
     cv2.destroyAllWindows()
-
