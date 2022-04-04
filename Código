@@ -34,35 +34,43 @@ if H == ord('h'):
     #---------------------------------------------------------------#
     #Metodologia 1
     sum_imag = cv2.add(c_imag1,c_imag2)
-    print(sum_imag)
     cv2.imshow('Suma',sum_imag)
-
     cv2.waitKey(0)
 
     #Metodologia2
     sum2_imag = c_imag1 + c_imag2
-    print(sum2_imag)
     cv2.imshow('Suma2',sum2_imag)
     cv2.waitKey(0)
 
     #Metodologia3
     sum3_imag = cv2.addWeighted(c_imag1, 0.5, c_imag2, 0.5, 0)
-    print(sum3_imag)
     cv2.imshow('Suma3',sum3_imag)
     cv2.waitKey(0)
 
-    combinado1 = np.concatenate((sum_imag, sum2_imag), axis=1)  #Concatenar
+    combinado1 = np.concatenate((c_imag1,sum_imag,c_imag2), axis=1)  #Concatenar
+    combinado1 = cv2.cvtColor(combinado1, cv2.COLOR_BGR2RGB)
     #Mostrar Imagen combinada
     plt.imshow(combinado1)
     plt.axis('off')
     plt.show()
 
+    combinado12 = np.concatenate((c_imag1,sum2_imag,c_imag2), axis=1)  #Concatenar
+    combinado12 = cv2.cvtColor(combinado12,cv2.COLOR_BGR2RGB)
+    #Mostrar Imagen combinada
+    plt.imshow(combinado12)
+    plt.axis('off')
+    plt.show()
 
+    combinado13 = np.concatenate((c_imag1,sum3_imag,c_imag2), axis=1)  #Concatenar
+    combinado13 = cv2.cvtColor(combinado13, cv2.COLOR_BGR2RGB)
+    #Mostrar Imagen combinada
+    plt.imshow(combinado13)
+    plt.axis('off')
+    plt.show()
 
     #La resta de las imagenes
     #---------------------------------------------------------------#
     res_imag = cv2.subtract(c_imag1,c_imag2)
-    print(res_imag)
     cv2.imshow('Resta',res_imag)
     cv2.waitKey()
 
@@ -77,9 +85,24 @@ if H == ord('h'):
     cv2.imshow('Absdiff',Absdiff)
     cv2.waitKey()
 
-    combinado2 = np.concatenate((res_imag, Sustraccion), axis=1)  #Concatenar
+    combinado2 = np.concatenate((c_imag1,res_imag,c_imag2), axis=1 ) #Concatenar
+    combinado2 = cv2.cvtColor(combinado2, cv2.COLOR_BGR2RGB)
     #Mostrar Imagen combinada
     plt.imshow(combinado2)
+    plt.axis('off')
+    plt.show()
+
+    combinado22 = np.concatenate((c_imag1,Sustraccion,c_imag2), axis=1 ) #Concatenar
+    combinado22 = cv2.cvtColor(combinado22, cv2.COLOR_BGR2RGB)
+    #Mostrar Imagen combinada
+    plt.imshow(combinado22)
+    plt.axis('off')
+    plt.show()
+
+    combinado23 = np.concatenate((c_imag1,Absdiff,c_imag2), axis=1 ) #Concatenar
+    combinado23 = cv2.cvtColor(combinado23, cv2.COLOR_BGR2RGB)
+    #Mostrar Imagen combinada
+    plt.imshow(combinado23)
     plt.axis('off')
     plt.show()
 
@@ -131,9 +154,9 @@ if H == ord('h'):
     ###################### POTENCIA ##############################
 
     #Potencia
-    Potencia = np.zeros(img1.shape, img1.dtype)
+    Potencia = np.zeros(c_imag1.shape, c_imag1.dtype)
     g = 0.5
-    Potencia = c * np.power(img1,g)
+    Potencia = c * np.power(c_imag1,g)
     maxi1 = np.amax(Potencia)
     Potencia = np.uint8(Potencia/maxi1 * 255)
         
@@ -142,18 +165,42 @@ if H == ord('h'):
 
 
     #Pow
-    Pow = cv2.pow(img1,2)
+    Pow = cv2.pow(c_imag1,2)
     cv2.imshow('Pow',Pow)
     cv2.waitKey()
     cv2.destroyAllWindows()
 
     #Potencia
-    Pote=(img1^2)
+    Pote=(c_imag1^2)
     cv2.imshow('Pote',Pote)
     cv2.waitKey()
     cv2.destroyAllWindows()
-        
 
+
+    combinado8 = np.concatenate((c_imag1,Potencia,c_imag2), axis=1 ) #Concatenar
+    combinado8 = cv2.cvtColor(combinado8, cv2.COLOR_BGR2RGB)
+    #Mostrar Imagen combinada
+    plt.imshow(combinado8)
+    plt.axis('off')
+    plt.show()
+
+    
+    combinado81 = np.concatenate((c_imag1,Pow,c_imag2), axis=1 ) #Concatenar
+    combinado81 = cv2.cvtColor(combinado81, cv2.COLOR_BGR2RGB)
+    #Mostrar Imagen combinada
+    plt.imshow(combinado81)
+    plt.axis('off')
+    plt.show()
+
+    combinado82 = np.concatenate((c_imag1,Pote,c_imag2), axis=1 ) #Concatenar
+    combinado82 = cv2.cvtColor(combinado82, cv2.COLOR_BGR2RGB)
+    #Mostrar Imagen combinada
+    plt.imshow(combinado82)
+    plt.axis('off')
+    plt.show()
+
+
+    
 
     cv2.waitKey(0) #Retardo
     cv2.destroyAllWindows()
