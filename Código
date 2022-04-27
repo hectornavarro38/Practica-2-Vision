@@ -4,15 +4,27 @@ from matplotlib import pyplot as plt
 import cv2 
 import math
 
-
+'''
+def transponer(c_imag1):
+    t = []
+    for i in range(len(c_imag1[0])):
+        t.append([])
+        for j in range(len(c_imag1)):
+            t[i].append(c_imag1[j][i])
+    return t
+    combinado16 = np.concatenate((c_imag1, transponer(c_imag1), c_imag2), axis=1)
+    combinado16 = cv2.cvtColor(combinado16, cv2.COLOR_BGR2RGB)
+    print('Operación Transpuesta 1')
+    cv2.imshow('combinado2', combinado16)
+'''
 
 
 img1 = cv2.imread('girasol1.png')
 img2 = cv2.imread('girasol2.png')
 
 #Dimencionamiento en bruto
-c_imag1 = cv2.resize(img1, dsize = (300, 350), interpolation=cv2.INTER_CUBIC)
-c_imag2 = cv2.resize(img2, dsize = (300, 350), interpolation=cv2.INTER_CUBIC)
+c_imag1 = cv2.resize(img1, dsize = (300, 300), interpolation=cv2.INTER_CUBIC)
+c_imag2 = cv2.resize(img2, dsize = (300, 300), interpolation=cv2.INTER_CUBIC)
 
 
 
@@ -27,9 +39,11 @@ print("------------2------------")
 cv2.imshow('Girasol1',c_imag1)
 cv2.imshow('Girasol2',c_imag2)
 
+'''
 H = cv2.waitKey (0) & 0xFF
 if H == ord('h'):
 
+    
     #Comenzando con la suma de imagenes
     #---------------------------------------------------------------#
     #Metodologia 1
@@ -43,6 +57,7 @@ if H == ord('h'):
     plt.imshow(combinado1)
     plt.axis('off')
     plt.show()
+    
 
     #Metodologia2
     sum2_imag = c_imag1 + c_imag2
@@ -56,11 +71,11 @@ if H == ord('h'):
     plt.axis('off')
     plt.show()
 
+    
     #Metodologia3
     sum3_imag = cv2.addWeighted(c_imag1, 0.5, c_imag2, 0.5, 0)
     cv2.imshow('Suma3',sum3_imag)
     cv2.waitKey(0)
-
 
     combinado13 = np.concatenate((c_imag1,sum3_imag,c_imag2), axis=1)  #Concatenar
     combinado13 = cv2.cvtColor(combinado13, cv2.COLOR_BGR2RGB)
@@ -109,18 +124,15 @@ if H == ord('h'):
     plt.show()
 
     cv2.destroyAllWindows()
-
+    
 
     #La división de la imagen
     #---------------------------------------------------------------#
+
+    #Metodología 1
     div_imag = cv2.divide(c_imag1, c_imag2)
     cv2.imshow('División',div_imag)
-    cv2.waitKey(0)
-
-    divi_imag = c_imag1 / c_imag2
-    cv2.imshow('División_1',divi_imag)
-    cv2.waitKey(0)
-
+    cv2.waitKey()
 
     combinado3 = np.concatenate((c_imag1,div_imag,c_imag2), axis=1 ) #Concatenar
     combinado3 = cv2.cvtColor(combinado3, cv2.COLOR_BGR2RGB)
@@ -129,18 +141,52 @@ if H == ord('h'):
     plt.axis('off')
     plt.show()
 
-    cv2.destroyAllWindows()
 
+    #Metodología 2
+    divi_imag = c_imag1 / c_imag2
+    cv2.imshow('División_1',divi_imag)
+    cv2.waitKey()
+
+    combinado32 = np.concatenate((c_imag1,divi_imag,c_imag2), axis=1 ) #Concatenar
+    combinado32 = cv2.cvtColor(combinado32, cv2.COLOR_BGR2RGB)
+    #Mostrar Imagen combinada
+    plt.imshow(combinado32)
+    plt.axis('off')
+    plt.show()
+
+
+    cv2.destroyAllWindows()
+    
 
     #La multiplicación de imagenes
     #---------------------------------------------------------------#
+
+    #Metodología 1
     mul_imag = cv2.multiply(c_imag1, c_imag2)
     cv2.imshow('Multiplicación',mul_imag)
     cv2.waitKey(0)
     
+    combinado4 = np.concatenate((c_imag1,mul_imag,c_imag2), axis=1 ) #Concatenar
+    combinado4 = cv2.cvtColor(combinado4, cv2.COLOR_BGR2RGB)
+    #Mostrar Imagen combinada
+    plt.imshow(combinado4)
+    plt.axis('off')
+    plt.show()
+
+    
+    #Metodología 2
     multi_imag = c_imag1 * c_imag2
     cv2.imshow('Multiplicación_1',multi_imag)
     cv2.waitKey(0)
+
+    combinado42 = np.concatenate((c_imag1,multi_imag,c_imag2), axis=1 ) #Concatenar
+    combinado42 = cv2.cvtColor(combinado42, cv2.COLOR_BGR2RGB)
+    #Mostrar Imagen combinada
+    plt.imshow(combinado4)
+    plt.axis('off')
+    plt.show()
+
+
 
     cv2.destroyAllWindows()
 
@@ -164,9 +210,8 @@ if H == ord('h'):
     cv2.destroyAllWindows()
 
 
-    ###################### DERIVADA ##############################
-
     #Derivada
+    #---------------------------------------------------------------#
 
     Derivada = cv2.Laplacian(img1,cv2.CV_32F)
     cv2.imshow('Derivada',Derivada)
@@ -176,31 +221,17 @@ if H == ord('h'):
 
         
 
-    ###################### POTENCIA ##############################
-
     #Potencia
+    #---------------------------------------------------------------#
+
+    #Metodología 1   
     Potencia = np.zeros(c_imag1.shape, c_imag1.dtype)
     g = 0.5
     Potencia = c * np.power(c_imag1,g)
     maxi1 = np.amax(Potencia)
-    Potencia = np.uint8(Potencia/maxi1 * 255)
-        
+    Potencia = np.uint8(Potencia/maxi1 * 255)  
     cv2.imshow('Potencia',Potencia)
     cv2.waitKey()
-
-
-    #Pow
-    Pow = cv2.pow(c_imag1,2)h
-    cv2.imshow('Pow',Pow)
-    cv2.waitKey()
-    cv2.destroyAllWindows()
-
-    #Potencia
-    Pote=(c_imag1^2)
-    cv2.imshow('Pote',Pote)
-    cv2.waitKey()
-    cv2.destroyAllWindows()
-
 
     combinado8 = np.concatenate((c_imag1,Potencia,c_imag2), axis=1 ) #Concatenar
     combinado8 = cv2.cvtColor(combinado8, cv2.COLOR_BGR2RGB)
@@ -208,14 +239,28 @@ if H == ord('h'):
     plt.imshow(combinado8)
     plt.axis('off')
     plt.show()
-
     
+
+
+    #Metodología 2 
+    Pow = cv2.pow(c_imag1,2)
+    cv2.imshow('Pow',Pow)
+    cv2.waitKey()
+    cv2.destroyAllWindows()
+
     combinado81 = np.concatenate((c_imag1,Pow,c_imag2), axis=1 ) #Concatenar
     combinado81 = cv2.cvtColor(combinado81, cv2.COLOR_BGR2RGB)
     #Mostrar Imagen combinada
     plt.imshow(combinado81)
     plt.axis('off')
     plt.show()
+    
+
+    #Metodología 3
+    Pote=(c_imag1^2)
+    cv2.imshow('Pote',Pote)
+    cv2.waitKey()
+    cv2.destroyAllWindows()
 
     combinado82 = np.concatenate((c_imag1,Pote,c_imag2), axis=1 ) #Concatenar
     combinado82 = cv2.cvtColor(combinado82, cv2.COLOR_BGR2RGB)
@@ -227,3 +272,167 @@ if H == ord('h'):
 
     cv2.waitKey(0) #Retardo
     cv2.destroyAllWindows()
+
+
+    #Translación A fin
+    #-----------------------------------------------------------------------#
+    #Metodo 1
+    ancho = c_imag1.shape[1] #columnas
+    alto = c_imag1.shape[0] # filas
+    M = np.float32([[1,0,100],[0,1,250]])
+    imageOut = cv2.warpAffine(c_imag1,M,(ancho,alto))
+    cv2.imshow('Imagen de entrada',c_imag1)
+    cv2.imshow('Imagen de salida',imageOut)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
+
+
+    #Metodo 2
+    rows, cols, ch = c_imag1.shape
+    pts1 = np.float32([[50, 50],
+                       [200, 50], 
+                       [50, 200]])
+      
+    pts2 = np.float32([[10, 100],
+                       [200, 50], 
+                       [100, 250]])
+
+    M = cv2.getAffineTransform(pts1, pts2)
+    dst = cv2.warpAffine(c_imag1, M, (cols, rows))
+
+
+    cv2.imshow('Imagen de entrada',c_imag1)
+    cv2.imshow('Imagen de salida fff',dst)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
+
+
+    #Metodo 3 Transformación a perséctivas
+    rows,cols,ch = c_imag1.shape
+     
+    pts1 = np.float32([[56,65],[368,52],[28,387],[389,390]])
+    pts2 = np.float32([[0,0],[300,0],[0,300],[300,300]])
+
+    M = cv2.getPerspectiveTransform(pts1,pts2)
+     
+    dst = cv2.warpPerspective(c_imag1,M,(300,300))
+
+
+    cv2.imshow('Imagen de entrada',c_imag1)
+    cv2.imshow('Imagen de salida',dst)
+    
+
+    #Faltan 3 métodos
+    #CONJUNCION
+    opand = cv2.bitwise_and(c_imag1,c_imag2)
+    cv2.imshow('Conjuncion', opand)
+    cv2.waitKey()
+        
+      
+    #DISYUNCION
+    opor = cv2.bitwise_or(c_imag1,c_imag2)
+    cv2.imshow('Disyuncion', opor)
+    cv2.waitKey()
+
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
+
+    #Negación 1
+    height, width, _ = c_imag1.shape
+
+    for i in range(0, height - 1):
+        for j in range(0, width -1):
+            pixel = c_imag1[i,j]
+            pixel[0] = 255 - pixel[0]
+            pixel[1] = 255 - pixel[1]
+            pixel[2] = 255 - pixel[2]
+            c_imag1[i,j] = pixel
+    cv2.imshow('Negacion',c_imag1)
+    cv2.waitKey(0) #Retardo
+    cv2.destroyAllWindows()
+
+
+
+    #Negacion 2
+    img_neg = 1 - c_imag1
+    cv2.imshow('Negacion 2',img_neg)
+    cv2.waitKey(0) #Retardo
+    cv2.destroyAllWindows()
+
+
+    
+    #Translacion 1
+    ancho = c_imag1.shape[1] #columnas
+    alto = c_imag1.shape[0] # filas
+    # Traslación
+    M = np.float32([[1,0,100],[0,1,150]]) #Construccion de la matriz
+    imageOut = cv2.warpAffine(c_imag1,M,(ancho,alto))
+    cv2.imshow('Imagen de entrada',c_imag1)
+    cv2.imshow('Imagen de salida',imageOut)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+
+
+    #Rescalado
+    Rescalado = cv2.resize(c_imag1, dsize=(350, 350))
+    cv2.imshow('Rescalado',Rescalado)
+    cv2.waitKey()
+    cv2.destroyWindow('Rescalado')
+
+
+
+    #Rotación 1
+    type(c_imag1)
+    c_imag1.shape
+    c_imag1 = cv2.cvtColor(c_imag1, cv2.COLOR_BGR2RGB)
+    plt.imshow(c_imag1[::-1])###Invertir imagen
+    plt.show()
+
+
+
+    #Rotación 2
+    ancho = c_imag1.shape[1] #columnas
+    alto = c_imag1.shape[0] # filas
+    Rotacion = cv2.getRotationMatrix2D((ancho//2,alto//2),180,1)
+    imageOut = cv2.warpAffine(c_imag1,Rotacion,(ancho,alto))
+    cv2.imshow('Rotacion',imageOut)
+    cv2.waitKey()
+    cv2.destroyWindow('Rotacion')
+    
+
+    
+    #transponer(c_imag1)
+        
+    transpuesta1 = cv2.transpose(c_imag1)
+    combinado160 = np.concatenate((c_imag1, transpuesta1, c_imag2), axis=1)
+    #combinado160 = cv2.cvtColor(combinado160, cv2.COLOR_BGR2RGB)
+    print('Operación Transpuesta 2')
+    cv2.imshow('combinado2', combinado160)
+    cv2.waitKey()
+    cv2.destroyWindow('combinado2')
+    
+
+    # Es el de Perspectiva + imagen 1
+    rows1, cols1, ch = c_imag1.shape
+    pts1 = np.float32([[0, 0], [300, 0], [0, 300],  [300, 300]])
+    pts2 = np.float32([[70, 70], [230, 70], [0, 300], [300, 300]])
+    M = cv2.getPerspectiveTransform(pts1, pts2)
+
+    persp = cv2.warpPerspective(c_imag1, M, (cols1, rows1))
+
+
+    proyeccion = persp + c_imag1
+    combinado17 = np.concatenate((c_imag1, proyeccion, c_imag2), axis=1)
+    #combinado17 = cv2.cvtColor(combinado17, cv2.COLOR_BGR2RGB)
+    print('Operación Proyección')
+    cv2.imshow('combinado2', combinado17)
+    cv2.waitKey()
+    cv2.destroyWindow('combinado2')
+    '''
